@@ -1,16 +1,30 @@
 <template>
   <div id="container">
     <h1>Login</h1>
-    <form>
+    <form @submit.prevent="login">
       <input type="text" v-model="username" placeholder="Username">
       <input type="password" v-model="password" placeholder="Password">
-      <a href="#">Log in</a>
+      <button >Sign In</button>
     </form>
   </div>
 </template>
 <script>
   export default {
-    name: 'Login'
+    name: 'Login',
+    data () {
+      return {
+        username: '',
+        password: ''
+      }
+    },
+    methods: {
+      login () {
+        this.$emit('checklogin', {
+          username: this.username,
+          password: this.password
+        })
+      }
+    }
   }
 </script>
 <style scoped>
@@ -35,7 +49,7 @@
 }
 
 /* Inputs */
-a,
+button,
 input{
   text-decoration: none;
   position: relative;
@@ -71,14 +85,14 @@ input:focus{
    color: #333;  }
 
 /* Link */
-a{
+button{
   font-family: 'Open Sans Condensed', sans-serif;
   text-align: center;
   padding: 4px 8px;
   background: rgba(107,255,3,0.3);
 }
 
-a:hover{
+button:hover{
   opacity: 0.7;
 }
 

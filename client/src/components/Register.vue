@@ -2,6 +2,7 @@
   <div id="container">
     <h1>Register</h1>
     <form @submit.prevent="register">
+      <input type="text"v-model="name" placeholder="Name">
       <input type="text"v-model="username" placeholder="Username">
       <input type="email"v-model="email" placeholder="E-mail">
       <input type="password" v-model="password" placeholder="Password">
@@ -16,7 +17,8 @@
       return {
         username: '',
         password: '',
-        email: ''
+        email: '',
+        name: ''
       }
     },
     methods: {
@@ -24,7 +26,8 @@
         this.$emit('saveuser', {
           username: this.username,
           email: this.email,
-          password: this.password
+          password: this.password,
+          name: this.name
         })
       }
     }

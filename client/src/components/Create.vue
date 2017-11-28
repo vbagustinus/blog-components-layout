@@ -1,20 +1,19 @@
 <template>
   <div>
-    <form action="" method="post" class="basic-grey">
-    <label>
+    <form @submit="create" class="basic-grey">
+      <label>
         <span>Title :</span>
         <input v-model="title" type="text" placeholder="Input title" />
-    </label>
-    
-    <label>
+      </label>
+      <label>
         <span>Article :</span>
         <textarea v-model="article" placeholder="Insert html type content"></textarea>
-    </label>
-     <label>
+      </label>
+      <label>
         <span>&nbsp;</span> 
-        <input class="button" value="Save" /> 
-    </label>    
-</form>
+        <button class="button" value="Save">Save</button> 
+      </label>    
+    </form>
   </div>
 </template>
 <script>
@@ -24,6 +23,14 @@
       return {
         title: '',
         article: ''
+      }
+    },
+    methods: {
+      create () {
+        this.$emit('create-article', {
+          title: this.title,
+          article: this.article
+        })
       }
     }
   }

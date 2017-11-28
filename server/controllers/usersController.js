@@ -3,6 +3,7 @@ const mongoose = require('mongoose').connect('mongodb://localhost/article');
 const User = require('../models/userModel')
 const ObjectId = require('mongodb').ObjectId
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const findAll = (req, res) => {
   User.find()
@@ -11,7 +12,6 @@ const findAll = (req, res) => {
 }
 
 const create = (req, res) => {
-  
   const saltRounds = 10;
   let input = req.body
   User.findOne({
@@ -22,10 +22,10 @@ const create = (req, res) => {
     if(!user){
       bcrypt.hash(input.password, saltRounds).then(function(hash) {
         let obj = {
-          name: input.name,
           username: input.username,
           password: hash,
-          email : input.email
+          email : input.email,
+          name: input.name
         }
         User.create(obj)
         .then( user => {
@@ -62,28 +62,48 @@ const destroy = (req, res) => {
 }
 
 const signin = (req, res) => {
-  console.log('MASUK LOGIN', req.body);
   let signin = req.body
   User.findOne(
   {
     username: signin.username
   })
   .then(user => {
-    // console.log('HASILFINONE',user);
     if(user){
       bcrypt.compare(signin.password, user.password)
       .then( result => {
+        console.log('<<<<<<<<',user);
         if(result){
-          res.status(200).send(
+          jwt.sign(
           {
-            msg : 'Success Login'
-          })
+            id: user._id,
+            name : user.name,
+            username : user.username,
+            email : user.email
+          },
+            'estehpurun',
+            (err, token) => {
+              console.log(' CEK TOKEN', token);
+              if(!err){
+                console.log(
+                  token, `Welcome ${user.name}`, user._id
+                );
+                res.send(
+                {
+                  token: token,
+                  name : user.name,
+                  user_id: user._id,
+                  email : user.email
+                })
+              } else {
+                res.status(400).send(err)
+              }
+            })
         } else {
-          res.status(200).send('Wrong Way')
+          res.send({msg: 'Wrong Password or username'})
         }
-      })
+      });
     } else {
-      res.status(200).send('Wrong Way')
+      res.send({msg: 'Wrong Password or username'})
     }
   })
   .catch(err => {
