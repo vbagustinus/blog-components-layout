@@ -1,30 +1,32 @@
 <template>
-  <div>
-    <div class="card">
-      <header class="card-header">
-        <p class="card-header-title">
-          {{ article.title }}
-        </p>
-      </header>
-      <div class="card-content">
-        <div class="content">
-          <p>{{ article.article }}</p>
-        </div>
-      </div>
-      <footer class="card-footer">
-        <a href="#" class="card-footer-item">Edit</a>
-        <router-link to="edit/">{{article._id}}</router-link>
-        <a href="#" class="card-footer-item">Delete</a>
-      </footer>
-    </div>
-    <br/><br/>
+  <div class="grid__wrapper">
+    <router-view 
+    v-for="(article, i) in articles" 
+    :key="i" 
+    :article="article"
+    />
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  name: 'Article',
-  props: ['article']
+  name: 'Admin',
+  data () {
+    return {
+      articles: [],
+      msg: 'Welcome to My Blog using Vue.js App'
+    }
+  },
+  created () {
+    axios.get('http://localhost:3000')
+    .then(({data}) => {
+      this.articles = data.articles
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

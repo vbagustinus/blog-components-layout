@@ -6,6 +6,7 @@ import Create from '@/components/Create'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Article from '@/components/Article'
+import Admin from '@/components/Admin'
 
 Vue.use(Router)
 
@@ -24,14 +25,22 @@ export default new Router({
     },
     {
       path: '/admin',
-      component: Article,
+      component: Admin,
       children: [
+        {
+          path: '',
+          component: Article
+        },
         {
           path: 'create',
           component: Create
         },
         {
-          path: 'create',
+          path: 'edit/:id',
+          component: Create
+        },
+        {
+          path: 'delete/:id',
           component: Create
         }
       ]

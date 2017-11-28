@@ -3,26 +3,45 @@
     <div class="column">
       <aside class="menu">
         <ul class="menu-list">
-          <a>Sale </a>
+          <div v-for="(article, i) in articles" :key="i">
+             <a @click="getdetail(article)">{{ article.title }} </a>
+          </div>
         </ul>
       </aside>
     </div>
     <div class="article__text">
-      <div class="article__subtitle">
-        <h2 class="red">title</h2>
+      <div v-if="detail" class="article__subtitle">
+        <h2 class="red">{{detail.title}}</h2>
       </div>
-      content
+      {{ detail.article }}
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Content',
   data () {
     return {
-      msg: 'Welcome to My Blog using Vue.js App'
+      articles: [],
+      detail: ''
     }
+  },
+  methods: {
+    getdetail (a) {
+      console.log(a)
+      this.detail = a
+    }
+  },
+  created () {
+    axios.get('http://localhost:3000')
+    .then(({data}) => {
+      this.articles = data.articles
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 }
 </script>

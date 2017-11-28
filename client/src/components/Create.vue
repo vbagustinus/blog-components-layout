@@ -3,7 +3,7 @@
     <form @submit="create" class="basic-grey">
       <label>
         <span>Title :</span>
-        <input v-model="title" type="text" placeholder="Input title" />
+        <input v-model="title" class="input" type="text" placeholder="Input title" />
       </label>
       <label>
         <span>Article :</span>
