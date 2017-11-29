@@ -11,6 +11,7 @@ const findAll = (req, res) => {
   .catch(err => res.status(500).send(err))
 }
 
+
 const create = (req, res) => {
   const saltRounds = 10;
   let input = req.body

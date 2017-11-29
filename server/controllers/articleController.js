@@ -16,6 +16,14 @@ const findAll = (req, res) => {
   .catch(err => res.status(500).send(err))
 }
 
+const findOne = (req, res) => {
+  Article.findOne({
+    _id : req.params.id
+  })
+  .then(data => res.status(200).send({data}))
+  .catch(err => res.status(500).send(err))
+}
+
 const create = (req, res) => {
   let input = req.body
   console.log('INI INPUT', input);
@@ -77,5 +85,6 @@ module.exports = {
   findAll,
   create,
   update,
-  destroy
+  destroy,
+  findOne
 };

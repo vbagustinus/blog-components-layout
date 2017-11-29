@@ -3,23 +3,23 @@
     <div class="column">
       <aside class="menu">
         <ul class="menu-list">
-          <div v-for="(article, i) in articles" :key="i">
-             <a @click="getdetail(article)">{{ article.title }} </a>
-          </div>
+          <WidgetArticles 
+            :articles="articles"
+          />
         </ul>
       </aside>
     </div>
-    <div class="article__text">
-      <div v-if="detail" class="article__subtitle">
-        <h2 class="red">{{detail.title}}</h2>
-      </div>
-      {{ detail.article }}
-    </div>
+      <router-view 
+        :articles="articles"
+      />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import WidgetArticles from '@/components/WidgetArticles'
+import MainContent from '@/components/MainContent'
+import DetailArticle from '@/components/DetailArticle'
 export default {
   name: 'Content',
   data () {
@@ -27,6 +27,11 @@ export default {
       articles: [],
       detail: ''
     }
+  },
+  components: {
+    WidgetArticles,
+    MainContent,
+    DetailArticle
   },
   methods: {
     getdetail (a) {
