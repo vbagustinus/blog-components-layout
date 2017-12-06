@@ -8,6 +8,7 @@ import Article from '@/components/Article'
 import Admin from '@/components/Admin'
 import DetailArticle from '@/components/DetailArticle'
 import MainContent from '@/components/MainContent'
+import EditBlog from '@/components/EditBlog'
 
 Vue.use(Router)
 
@@ -48,12 +49,8 @@ export default new Router({
         {
           path: 'edit/:id',
           name: 'EditBlog',
-          component: Article
-        },
-        {
-          path: 'delete/:id',
-          name: 'DeleteAdmin',
-          component: Article
+          component: EditBlog,
+          props: true
         }
       ]
     },

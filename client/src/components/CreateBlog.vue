@@ -1,130 +1,66 @@
 <template>
-  <div>
-    <form @submit="create" class="basic-grey">
-      <label>
-        <span>Title :</span>
-        <input v-model="title" class="input" type="text" placeholder="Input title" />
-      </label>
-      <label>
-        <span>Article :</span>
-        <textarea v-model="article" placeholder="Insert html type content"></textarea>
-      </label>
-      <label>
-        <span>&nbsp;</span> 
-        <button class="button" value="Save">Save</button> 
-      </label>    
-    </form>
+  <div class="article__text hero">
+    <h2 class="title h2">Create Articles</h2>
+      <label class="label">Title</label>
+      <p class="control has-icon has-icon-right">
+        <input class="input is-dark" type="text" v-model="article.title" placeholder="insert title" required>
+      </p>
+      <label class="label">Link Images</label>
+      <p class="control has-icon has-icon-right">
+        <input class="input is-dark" type="text" v-model="article.img" placeholder="Insert your image link" required>
+      </p>
+      <label class="label">Content</label>
+      <p class="control">
+        <textarea class="textarea is-dark" v-model="article.article" placeholder="Write your content" required></textarea>
+      </p>
+      <label class="label">Category</label>
+      <p class="control">
+        <input class="input is-dark" type="text" v-model="article.category" placeholder="insert category" required>
+      </p>
+      <p class="control">
+        <button @click="saveForm" class="button is-dark">Create</button>
+        <button class="button is-light"><router-link to='/admin'>Cancel</router-link></button> 
+      </p>
   </div>
 </template>
+
 <script>
-  export default {
-    name: 'CreateBlog',
-    data () {
-      return {
+import { mapActions } from 'vuex'
+export default {
+  name: 'CreateBlog',
+  data () {
+    return {
+      article: {
         title: '',
-        article: ''
-      }
-    },
-    methods: {
-      create () {
-        this.$emit('create-article', {
-          title: this.title,
-          article: this.article
-        })
+        img: '',
+        article: '',
+        category: ''
       }
     }
+  },
+  methods: {
+    ...mapActions([
+      'saveArticle'
+    ]),
+    saveForm () {
+      // console.log(this.article)
+      this.saveArticle({
+        ...this.article
+      })
+      this.$router.push('/admin')
+    }
   }
+}
 </script>
 
-<style scoped>
-  /* Basic Grey */
-  @import url('https://fonts.googleapis.com/css?family=Amatic+SC|Montserrat|Poiret+One');
-* {
-  margin: 0;
-  font-family: 'Montserrat';
-}
-.basic-grey {
-    width: 1000px;
-    margin: auto;
-    margin-left:auto;
-    margin-right:auto;
-    max-width: auto;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 25%, rgba(255, 255, 255, 0.2) 75%, rgba(255, 255, 255, 0) 100%);
-    padding: 25px 15px 25px 10px;
-    font: 12px Georgia, "Times New Roman", Times, serif;
-    color: #888;
-    text-shadow: 1px 1px 1px #FFF;
-    border:1px solid #E4E4E4;
-}
-.basic-grey h1 {
-    font-size: 25px;
-    padding: 0px 0px 10px 40px;
-    display: block;
-    border-bottom:1px solid #E4E4E4;
-    margin: -10px -15px 30px -10px;;
-    color: #888;
-}
-.basic-grey h1>span {
-    display: block;
-    font-size: 11px;
-}
-.basic-grey label {
-    display: block;
-    margin: 0px;
-}
-.basic-grey label>span {
-    float: left;
-    width: 20%;
-    text-align: right;
-    padding-right: 10px;
-    margin-top: 10px;
-    color: #888;
-}
-.basic-grey input[type="text"], .basic-grey input[type="email"], .basic-grey textarea, .basic-grey select {
-    border: 1px solid #DADADA;
-    color: #888;
-    height: 30px;
-    margin-bottom: 16px;
-    margin-right: 6px;
-    margin-top: 2px;
-    outline: 0 none;
-    padding: 3px 3px 3px 5px;
-    width: 70%;
-    font-size: 12px;
-    line-height:15px;
-    box-shadow: inset 0px 1px 4px #ECECEC;
-    -moz-box-shadow: inset 0px 1px 4px #ECECEC;
-    -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
-}
-.basic-grey textarea{
-    padding: 10px 3px 3px 5px;
-}
-.basic-grey select {
-    background: #FFF no-repeat right;
-    background: #FFF no-repeat right);
-    appearance:none;
-    -webkit-appearance:none; 
-    -moz-appearance: none;
-    text-indent: 0.01px;
-    text-overflow: '';
-    width: 70%;
-    height: 35px;
-    line-height: 25px;
-}
-.basic-grey textarea{
-    height:100px;
-}
-.basic-grey .button {
-    background: #E27575;
-    border: none;
-    padding: 10px 25px 10px 25px;
-    color: #FFF;
-    box-shadow: 1px 1px 5px #B6B6B6;
-    border-radius: 3px;
-    text-shadow: 1px 1px 1px #fff;
-    cursor: pointer;
-}
-.basic-grey .button:hover {
-    background: #CF7A7A
-}
+<style>
+  .article__text{
+    text-align: left;
+    margin: 0 100px 0 100px;
+    padding: 30px;
+    color: #000;
+  }
+  .h2 {
+    color: #000!important;
+  }
 </style>

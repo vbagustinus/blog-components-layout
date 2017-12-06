@@ -30,7 +30,8 @@ const create = (req, res) => {
   let objArticle = {
     title: input.title,
     article: input.article,
-    category: input.category
+    category: input.category,
+    img: input.img
   }
   console.log(objArticle);
   Article.create(objArticle)
@@ -49,9 +50,10 @@ const create = (req, res) => {
 const update = (req, res) => {
   let id = ObjectId(req.params.id)
   let edit = req.body
-  // console.log('CEK STATUS',id);
+  // console.log('CEK STATUS',edit);
   Article.findById(id)
   .then(dataArticle => {
+    // console.log(dataArticle)
     dataArticle.title = edit.title,
     dataArticle.article = edit.article,
     dataArticle.category = edit.category

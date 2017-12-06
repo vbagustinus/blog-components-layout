@@ -37,11 +37,7 @@
       <!-- Hero content: will be in the middle -->
       <div class="hero-body">
         <div class="container has-text-centered">
-            <router-view 
-              @saveuser="saveUser" 
-              @checklogin="checkLogin"
-              @create-article="createArticle"
-            />
+            <router-view />
         </div>
       </div>
     </section>
@@ -51,36 +47,7 @@
 <script>
   import axios from 'axios'
   export default {
-    name: 'app',
-    methods: {
-      saveUser (data) {
-        axios.post('http://localhost:3000/register', data)
-        .then(function (response) {
-          console.log(response)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-      },
-      checkLogin (data) {
-        axios.post('http://localhost:3000/login', data)
-        .then(function ({data}) {
-          console.log('DATA SIAPA', data)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-      },
-      createArticle (data) {
-        axios.post('http://localhost:3000', data)
-        .then(function (data) {
-          console.log('DATA SIAPA', data)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-      }
-    }
+    name: 'app'
   }
 </script>
 

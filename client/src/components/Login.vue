@@ -1,28 +1,43 @@
 <template>
-  <div id="container">
-    <h1>Login</h1>
-    <form @submit.prevent="login">
-      <input type="text" v-model="username" placeholder="Username">
-      <input type="password" v-model="password" placeholder="Password">
-      <button >Sign In</button>
+  <div v-if="!statusLogin" id="container">
+    <h1 class="title">Login</h1>
+    <form @submit.prevent="loginCheck">
+      <input type="text" v-model="login.username" placeholder="Username">
+      <input type="password" v-model="login.password" placeholder="Password">
+      <button class="button is-dark">Sign In</button>
     </form>
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
   export default {
     name: 'Login',
     data () {
       return {
-        username: '',
-        password: ''
+        is_user: '',
+        login: {
+          username: '',
+          password: ''
+        }
+      }
+    },
+    computed: {
+      ...mapState([
+        'statusLogin'
+      ]),
+      statusLogin () {
+        console.log('MAUSK')
       }
     },
     methods: {
-      login () {
-        this.$emit('checklogin', {
-          username: this.username,
-          password: this.password
-        })
+      ...mapActions([
+        'checkLogin'
+      ])
+    },
+    created () {
+      let parsing = localStorage.getItem('user_id')
+      if (parsing) {
+        this.is_user = parsing
       }
     }
   }
@@ -36,7 +51,7 @@
 /* Login container */
 #container{
   position: absolute;
-  top: 0;
+  top: 500px;
   left: 0;
   right: 0;
   bottom: 0;

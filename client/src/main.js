@@ -3,10 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueBlu from 'vue-blu'
-import 'vue-blu/dist/css/vue-blu.min.css'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
+import VueBlu from 'vue-blu'
+import 'vue-blu/dist/css/vue-blu.min.css'
 import store from './vuex/store'
 
 Vue.use(Buefy)

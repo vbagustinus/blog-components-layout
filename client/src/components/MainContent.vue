@@ -1,6 +1,6 @@
 <template>
   <div class="box article__text">
-    <div  v-for="article in articles" :key="article._id">
+    <div v-for="article in articles" :key="article._id">
       <article class="media">
         <div class="media-left">
           <figure class="image is-64x64">

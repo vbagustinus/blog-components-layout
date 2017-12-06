@@ -1,37 +1,41 @@
 <template>
   <div id="container">
-    <h1>Register</h1>
+    <h1 class="title">Register</h1>
     <form @submit.prevent="register">
-      <input type="text"v-model="name" placeholder="Name">
-      <input type="text"v-model="username" placeholder="Username">
-      <input type="email"v-model="email" placeholder="E-mail">
-      <input type="password" v-model="password" placeholder="Password">
-      <button >Sign Up</button>
+      <input type="text"v-model="formRegister.name" placeholder="Name" required>
+      <input type="text"v-model="formRegister.username" placeholder="Username" required>
+      <input type="email"v-model="formRegister.email" placeholder="E-mail" required>
+      <input type="password" v-model="formRegister.password" placeholder="Password" required>
+      <button class="button is-dark">Sign Up</button>
     </form>
   </div>
 </template>
 <script>
-  export default {
-    name: 'Register',
-    data () {
-      return {
+import { mapActions } from 'vuex'
+
+export default {
+  name: 'Register',
+  data () {
+    return {
+      formRegister: {
         username: '',
         password: '',
         email: '',
         name: ''
       }
-    },
-    methods: {
-      register () {
-        this.$emit('saveuser', {
-          username: this.username,
-          email: this.email,
-          password: this.password,
-          name: this.name
-        })
-      }
+    }
+  },
+  methods: {
+    ...mapActions([
+      'saveUser'
+    ]),
+    register () {
+      this.saveUser({
+        ...this.formRegister
+      })
     }
   }
+}
 </script>
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Amatic+SC|Montserrat|Poiret+One');
@@ -42,13 +46,13 @@
 /* Login container */
 #container{
   position: absolute;
-  top: 0;
+  top: 500px;
   left: 0;
   right: 0;
   bottom: 0;
   margin: auto;
   width: 260px;
-  height: 260px;
+  height: 300px;
   border-radius: 5px;
   background: rgba(3,3,3,0.25);
   box-shadow: 1px 1px 50px #000;
