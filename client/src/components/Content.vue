@@ -16,37 +16,36 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapActions, mapState } from 'vuex'
 import WidgetArticles from '@/components/WidgetArticles'
 import MainContent from '@/components/MainContent'
-import DetailArticle from '@/components/DetailArticle'
 export default {
   name: 'Content',
   data () {
     return {
-      articles: [],
       detail: ''
     }
   },
   components: {
     WidgetArticles,
-    MainContent,
-    DetailArticle
+    MainContent
+  },
+  computed: {
+    ...mapState([
+      'articles'
+    ])
   },
   methods: {
     getdetail (a) {
       console.log(a)
       this.detail = a
-    }
+    },
+    ...mapActions([
+      'allArticles'
+    ])
   },
   created () {
-    axios.get('http://localhost:3000')
-    .then(({data}) => {
-      this.articles = data.articles
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    this.allArticles()
   }
 }
 </script>

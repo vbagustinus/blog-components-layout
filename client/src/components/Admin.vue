@@ -1,15 +1,12 @@
 <template>
   <div class="grid__wrapper">
-    <router-view 
-    v-for="(article, i) in articles" 
-    :key="i" 
-    :article="article"
-    />
+    <router-view :articles="articles"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Article from '@/components/Article'
 export default {
   name: 'Admin',
   data () {
@@ -17,6 +14,9 @@ export default {
       articles: [],
       msg: 'Welcome to My Blog using Vue.js App'
     }
+  },
+  components: {
+    Article
   },
   created () {
     axios.get('http://localhost:3000')

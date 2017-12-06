@@ -18,7 +18,7 @@
 </template>
 <script>
   export default {
-    name: 'Create',
+    name: 'CreateBlog',
     data () {
       return {
         title: '',

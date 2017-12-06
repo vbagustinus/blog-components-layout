@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Content from '@/components/Content'
-import Intro from '@/components/Intro'
-import Create from '@/components/Create'
+import CreateBlog from '@/components/CreateBlog'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Article from '@/components/Article'
@@ -17,11 +16,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Into',
-      component: Intro
-    },
-    {
-      path: '/blog',
       component: Content,
       children: [
         {
@@ -30,7 +24,7 @@ export default new Router({
           component: MainContent
         },
         {
-          path: ':id',
+          path: '/blog/:id',
           name: 'DetailArticle',
           component: DetailArticle,
           props: true
@@ -43,23 +37,23 @@ export default new Router({
       children: [
         {
           path: '',
-          name: 'Admin',
+          name: 'Article',
           component: Article
         },
         {
           path: 'create',
-          name: 'CreateAdmin',
-          component: Create
+          name: 'CreateBlog',
+          component: CreateBlog
         },
         {
           path: 'edit/:id',
-          name: 'EditAdmin',
-          component: Create
+          name: 'EditBlog',
+          component: Article
         },
         {
           path: 'delete/:id',
           name: 'DeleteAdmin',
-          component: Create
+          component: Article
         }
       ]
     },

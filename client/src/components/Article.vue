@@ -1,116 +1,32 @@
 <template>
-  <div>
-    <div class="card">
-      <header class="card-header">
-        <p class="card-header-title">
-          {{ article.title }}
-        </p>
-      </header>
-      <div class="card-content">
-        <div class="content">
-          <p>{{ article.article }}</p>
-        </div>
-      </div>
-      <footer class="card-footer">
-        <a href="#" class="card-footer-item">Edit</a>
-        <router-link to="edit/">{{article._id}}</router-link>
-        <a href="#" class="card-footer-item">Delete</a>
-      </footer>
-    </div>
-    <br/><br/>
+  <div class="article__text posisi">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><abbr title="Position">No</abbr></th>
+          <th>Title</th>
+          <th colspan="2"><abbr title="Played">Actions</abbr></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(article, i) in articles":key="i">
+          <th>{{i + 1}}</th>
+          <td>{{ article.title }}</td>
+          <td><router-link class="card-footer-item" :to="'blog/edit/'+article._id">Edit</router-link></td>
+          <td> <router-link class="card-footer-item" :to="'blog/delete/'+article._id">Delete</router-link></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Article',
-  props: ['article']
+  props: ['articles']
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-@import url('https://fonts.googleapis.com/css?family=Amatic+SC|Montserrat|Poiret+One');
-  * {
-  margin: 0;
-  font-family: 'Montserrat';
-}
+<style>
 
-img {
-  width: 100%;
-}
-.grid__wrapper {
-  width: 900px;
-  margin: 0;
-}
-.red {
-  color: blue;
-}
-.article__subtitle {
-  grid-area: st;
-  text-align: right;
-  margin: 1em 0;
-  padding: 20px;
-}
-.article__subtitle h2 {
-  font-size: 2.2em;
-  padding: 0;
-  margin: 0 0 -10px;
-  font-weight: 900;
-  opacity: 0.9;
-}
-.article__subtitle h3 {
-  font-size: 1.3em;
-  padding: 0;
-  margin: 0;
-  font-weight: 400;
-}
-
-.article__text {
-  columns: 2;
-  column-gap: 1.5em;
-  column-width: 900px;
-  background: whitesmoke;
-  color: #444;
-  padding: 50px;
-}
-.article__text p {
-  font-weight: 100;
-}
-.article__text p:first-child {
-  margin-top: 0;
-}
-
-/* MENU */
-
-.menu {
-  font-size: 1rem;
-  padding-top: 20px;
-}
-
-.menu-list {
-  line-height: 1.25;
-}
-
-.menu-list a {
-  border-radius: 2px;
-  color: #4a4a4a;
-  display: block;
-  padding: 0.5em 0.75em;
-}
-
-.menu-list a:hover {
-  background-color: #3273dc;
-  color: #363636;
-}
-
-.menu-list a.is-active {
-  background-color: #dbdbdb;
-  color: #fff;
-}
-
-.menu-list li ul {
-  border-left: 1px solid #dbdbdb;
-  margin: 0.75em;
-  padding-left: 0.75em;
-}
 </style>
