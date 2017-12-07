@@ -1,7 +1,8 @@
 <template>
-  <div v-if="!statusLogin" id="container">
+  <div v-if="!statusLogin && !is_user" id="container">
     <h1 class="title">Login</h1>
     <form @submit.prevent="loginCheck">
+      <label><small>default: user & pwd => admin & admin</small></label>
       <input type="text" v-model="login.username" placeholder="Username">
       <input type="password" v-model="login.password" placeholder="Password">
       <button class="button is-dark">Sign In</button>
@@ -10,37 +11,42 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
-  export default {
-    name: 'Login',
-    data () {
-      return {
-        is_user: '',
-        login: {
-          username: '',
-          password: ''
-        }
-      }
-    },
-    computed: {
-      ...mapState([
-        'statusLogin'
-      ]),
-      statusLogin () {
-        console.log('MAUSK')
-      }
-    },
-    methods: {
-      ...mapActions([
-        'checkLogin'
-      ])
-    },
-    created () {
-      let parsing = localStorage.getItem('user_id')
-      if (parsing) {
-        this.is_user = parsing
+export default {
+  name: 'Login',
+  data () {
+    return {
+      is_user: '',
+      login: {
+        username: '',
+        password: ''
       }
     }
+  },
+  computed: {
+    ...mapState([
+      'statusLogin'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'checkLogin'
+    ]),
+    loginCheck () {
+      this.checkLogin({
+        ...this.login
+      })
+      this.login.username = ''
+      this.login.password = ''
+    }
+  },
+  created () {
+    let parsing = localStorage.getItem('token')
+    if (parsing) {
+      this.is_user = parsing
+      this.$router.push('/admin')
+    }
   }
+}
 </script>
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Amatic+SC|Montserrat|Poiret+One');

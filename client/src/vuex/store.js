@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from '../router'
 
 const http = axios.create(({
   baseURL: 'http://localhost:3000'
@@ -31,6 +32,9 @@ const mutations = {
   },
   setLogin (state, data) {
     state.statusLogin = data
+  },
+  clearLogin (state) {
+    state.statusLogin = false
   }
 }
 
@@ -94,6 +98,7 @@ const actions = {
         localStorage.setItem('user_id', data.user_id)
         localStorage.setItem('name', data.name)
         commit('setLogin', data)
+        router.push('/admin')
       } else {
         alert('Username atau Password Salah')
       }
@@ -110,7 +115,10 @@ const actions = {
     .catch(function (error) {
       console.log(error)
     })
-  }
+  },
+  clearSession ({ commit }) {
+    commit('clearLogin')
+  },
 }
 
 const store = new Vuex.Store({

@@ -5,27 +5,21 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Article from '@/components/Article'
+import { mapState } from 'vuex'
 export default {
   name: 'Admin',
-  data () {
-    return {
-      articles: [],
-      msg: 'Welcome to My Blog using Vue.js App'
-    }
-  },
-  components: {
-    Article
+  computed: {
+    ...mapState([
+      'statusLogin'
+    ])
   },
   created () {
-    axios.get('http://localhost:3000')
-    .then(({data}) => {
-      this.articles = data.articles
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    let parsing = localStorage.getItem('token')
+    if (parsing) {
+      this.is_user = parsing
+    } else {
+      this.$router.push('/login')
+    }
   }
 }
 </script>

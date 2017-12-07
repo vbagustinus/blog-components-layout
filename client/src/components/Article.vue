@@ -34,11 +34,18 @@ export default {
   },
   computed: {
     ...mapState([
-      'articles'
+      'articles',
+      'statusLogin'
     ])
   },
   created () {
     this.allArticles()
+    let parsing = localStorage.getItem('token')
+    if (parsing) {
+      this.is_user = parsing
+    } else {
+      this.$router.push('/login')
+    }
   }
 }
 </script>

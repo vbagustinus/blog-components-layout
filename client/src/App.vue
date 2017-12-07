@@ -20,14 +20,17 @@
                 <a class="navbar-item">
                   <router-link to="/">Home</router-link>
                 </a>
-                <a class="navbar-item">
+                <a class="navbar-item" v-if="statusLogin || is_user">
                    <router-link to="/admin">Admin</router-link>
                 </a>
-                <a class="navbar-item">
+                <a class="navbar-item" v-if="!is_user && !statusLogin">
                    <router-link to="/login">Login</router-link>
                 </a>
-                <a class="navbar-item">
-                   <router-link to="/register">Register</router-link>
+                <a class="navbar-item" v-if="statusLogin || is_user">
+                   <router-link to="/register">New Register</router-link>
+                </a>
+                <a class="navbar-item" v-if="statusLogin || is_user" @click="logout">
+                   Logout
                 </a>
               </div>
             </div>
@@ -45,10 +48,37 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  export default {
-    name: 'app'
+import { mapState, mapActions } from 'vuex'
+export default {
+  name: 'app',
+  data () {
+    return {
+      is_user: false
+    }
+  },
+  methods: {
+    ...mapActions([
+      'clearSession'
+    ]),
+    logout () {
+      localStorage.clear()
+      this.clearSession()
+      this.is_user = false
+      this.$router.push('/login')
+    }
+  },
+  computed: {
+    ...mapState([
+      'statusLogin'
+    ])
+  },
+  created () {
+    let parsing = localStorage.getItem('token')
+    if (parsing) {
+      this.is_user = parsing
+    }
   }
+}
 </script>
 
 <style>

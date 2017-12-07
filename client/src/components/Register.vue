@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div id="container" v-if="!statusLogin && is_user">
     <h1 class="title">Register</h1>
     <form @submit.prevent="register">
       <input type="text"v-model="formRegister.name" placeholder="Name" required>
@@ -11,12 +11,13 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'Register',
   data () {
     return {
+      is_user: '',
       formRegister: {
         username: '',
         password: '',
@@ -24,6 +25,11 @@ export default {
         name: ''
       }
     }
+  },
+  computed: {
+    ...mapState([
+      'statusLogin'
+    ])
   },
   methods: {
     ...mapActions([
@@ -33,6 +39,14 @@ export default {
       this.saveUser({
         ...this.formRegister
       })
+    }
+  },
+  created () {
+    let parsing = localStorage.getItem('token')
+    if (parsing) {
+      this.is_user = parsing
+    } else {
+      this.$router.push('/login')
     }
   }
 }
